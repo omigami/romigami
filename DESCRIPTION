@@ -1,0 +1,22 @@
+Package: romigami
+Type: Package
+Title: R wrapper around the Omigami Python package
+Version: 1.0
+Date: 2021-06-01
+Author: Pierre Merckaert
+Maintainer: Pierre <pierre@datarevenue.com>
+Description: The API uses a Spec2Vec model that was trained on the entire GNPS spectral library.
+    It embeds each of your spectra into a vector space and calculates the cosine similarity to all GNPS library spectra
+    in this vector space. It then returns you the top library matches for each of your spectra.
+License: MIT
+Depends: R (>= 4.1.0)
+Imports:
+	reticulate
+RoxygenNote: 7.1.1
+Encoding: UTF-8
+Suggests: 
+    rmarkdown,
+    knitr,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
