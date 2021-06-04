@@ -2,7 +2,7 @@
 # Created by: pierre
 # Created on: 02/06/2021
 
-#' Creates a reticulate virtual environment and install the Python omigami package on it
+#' Creates a `reticulate` virtual environment and install the Python omigami package on it
 #' @export
 initialize_environment <- function(){
   reticulate::virtualenv_create("Romigami", python_version = "3.8")
@@ -10,7 +10,7 @@ initialize_environment <- function(){
   reticulate::py_install("omigami")
 }
 
-#' Instantiates the Spec2Vec tool of the Omigami client and returns the n_best spectra matches for each input in mgf_path
+#' Instantiates the Spec2Vec tool of the `Omigami` client and returns the n_best spectra matches for each input in mgf_path
 #'
 #' @param token Bearer token needed for authentication
 #' @param mgf_path Path to the mgf file
