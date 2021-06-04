@@ -9,7 +9,7 @@
 <!-- image:: https://readthedocs.org/projects/omigami/badge/?version=latest :target: https://omigami.readthedocs.io/en/latest/?badge=latest :alt: Documentation Status -->
 
 
-A R client package to access Omigami services.
+An R client package to access Omigami services.
 
 ## Installation
 
@@ -53,6 +53,7 @@ results <- match_spectra_from_path(token = token,
 #### Notebooks
 You can find a [tutorial](https://github.com/omigami/romigami/blob/master/notebook/Tutorial.ipynb) notebook in the `/notebooks/` folder.
 
+And an [R Markdown document](https://github.com/omigami/romigami/blob/master/vignettes/Tutorial.Rmd) on the `/vignettes/` folder.
 ## How it works
 
 ### Spec2Vec
