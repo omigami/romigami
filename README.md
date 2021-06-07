@@ -11,6 +11,8 @@
 
 An R client package to access Omigami services.
 
+*Please note that R version >= 4.1.0 and the `devtools` library are required to install and use Omigami.*
+
 ## Installation
 
 ```r
