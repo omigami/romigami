@@ -2,10 +2,10 @@
 % Please edit documentation in R/romigami.R
 \name{initialize_environment}
 \alias{initialize_environment}
-\title{Creates a reticulate virtual environment and install the Python omigami package on it}
+\title{Creates a `reticulate` virtual environment and install the Python omigami package on it}
 \usage{
 initialize_environment()
 }
 \description{
-Creates a reticulate virtual environment and install the Python omigami package on it
+Creates a `reticulate` virtual environment and install the Python omigami package on it
 }

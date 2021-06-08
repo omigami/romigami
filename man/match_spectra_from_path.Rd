@@ -2,7 +2,7 @@
 % Please edit documentation in R/romigami.R
 \name{match_spectra_from_path}
 \alias{match_spectra_from_path}
-\title{Instantiates the Spec2Vec tool of the Omigami client and returns the n_best spectra matches for each input in mgf_path}
+\title{Instantiates the Spec2Vec tool of the `Omigami` client and returns the n_best spectra matches for each input in mgf_path}
 \usage{
 match_spectra_from_path(token, mgf_path, n_best)
 }
@@ -17,5 +17,5 @@ match_spectra_from_path(token, mgf_path, n_best)
 A list of dataframes result
 }
 \description{
-Instantiates the Spec2Vec tool of the Omigami client and returns the n_best spectra matches for each input in mgf_path
+Instantiates the Spec2Vec tool of the `Omigami` client and returns the n_best spectra matches for each input in mgf_path
 }
