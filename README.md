@@ -26,7 +26,12 @@ Huber F, Ridder L, Verhoeven S, Spaaks JH, Diblen F, Rogers S, et al. (2021) Spe
 
 ## Motivation
 
-TODO
+We aim to support metabolomics research by providing the following :
+- **Easy-to-use** tools 
+- **Access and scalability** to the newest algorithms
+- **Maintenance, support and documentation** of software, models and data
+- **A community** of metabolomics researchers via our Slack, FAQ, forum  
+  (# TODO: Add links to Slack, FAQ etc...)
 
 ## Features
 
