@@ -15,14 +15,21 @@ initialize_environment <- function(){
 #' @param token Bearer token needed for authentication
 #' @param mgf_path Path to the mgf file
 #' @param n_best number of spectra matches to return for each spectrum input
+#' @param include_metadata Metadata keys to include in the response. Will make response slower.
+#' Please check the documentation for a list of valid keys.
+#' @param ion_mode Selects which model will be used for the predictions:
+#' Either a model trained with positive or negative ion mode spectra data. Defaults to positive.
 
 #' @return A list of dataframes result
 #' @export
-match_spectra_from_path <- function(token, mgf_path, n_best){
+match_spectra_from_path <- function(token, mgf_path, n_best, include_metadata, ion_mode){
   omigami <- reticulate::import("omigami")
 
   client <- omigami$Spec2Vec(token=token)
-  results <- client$match_spectra_from_path(mgf_path=mgf_path, n_best=as.integer(n_best))
+  results <- client$match_spectra_from_path(mgf_path,
+                                            as.integer(n_best),
+                                            include_metadata,
+                                            ion_mode)
 
   return(results)
 }
