@@ -30,8 +30,7 @@ We aim to support metabolomics research by providing the following :
 - **Easy-to-use** tools 
 - **Access and scalability** to the newest algorithms
 - **Maintenance, support and documentation** of software, models and data
-- **A community** of metabolomics researchers via our Slack, FAQ, forum  
-  (# TODO: Add links to Slack, FAQ etc...)
+- **A community** of metabolomics researchers via our [Slack](https://join.slack.com/t/ml4metabolomics/shared_invite/zt-r39udtdg-G36YE6GQt1YdVIwTdeT8aw)
 
 ## Features
 
@@ -51,11 +50,23 @@ initialize_environment()
 token <- "your_token"
 mgf_file_path <- "path_to_file.mgf"
 n_best_matches <- 10
+include_metadata <- list("Smiles", "Compound_name")
+ion_mode <- "positive"  # either positive or negative
 
 results <- match_spectra_from_path(token = token,
                                    mgf_path = mgf_file_path,
-                                   n_best = 10) 
+                                   n_best = n_best_matches,
+                                   include_metadata = include_metadata,
+                                   ion_mode = ion_mode
+) 
   ```
+The supported metadata keys for omigami are (case insensitive):
+- "smiles",
+- "compound_name",
+- "instrument",
+- "parent_mass",
+- "inchikey_smiles",
+- "inchikey_inchi"
 
 #### Notebooks
 You can find a [tutorial](https://github.com/omigami/romigami/blob/master/notebook/Tutorial.ipynb) notebook in the `/notebooks/` folder.
