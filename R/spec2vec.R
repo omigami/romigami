@@ -1,5 +1,5 @@
-# Title     : romigami
-# Created by: pierre
+# Title     : spec2vec
+# Created by: Data Revenue
 # Created on: 02/06/2021
 
 #' Creates a `reticulate` virtual environment and install the Python omigami package on it
