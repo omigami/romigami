@@ -1,5 +1,5 @@
 ---
-title: An R Markdown document converted from "notebook/Tutorial.ipynb"
+title: An R Markdown document converted from "notebook/spec2vec/tutorial.ipynb"
 output: html_document
 ---
 
@@ -61,7 +61,7 @@ The following information about the predicted spectra are returned :
 ```{r}
 # install devtools and romigami if not already installed
 if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
-if("romigami" %in% installed.packages() == FALSE) {devtools::install_github("omigami/romigami")}
+devtools::install_github("omigami/romigami")
 
 # import the romigami package
 library("romigami")
