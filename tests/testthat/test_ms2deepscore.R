@@ -1,5 +1,5 @@
 library(testthat)
-library(romigami)
+source("R/ms2deepscore.R")
 
 test_that("integration is correct", {
   initialize_environment()

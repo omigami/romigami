@@ -1,5 +1,5 @@
 library(testthat)
-source("/Users/pierre/PycharmProjects/romigami/R/romigami.R")
+source("R/spec2vec.R")
 
 test_that("integration is correct", {
   initialize_environment()
