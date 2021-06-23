@@ -1,5 +1,5 @@
 ---
-title: An R Markdown document converted from "notebook/Tutorial.ipynb"
+title: An R Markdown document converted from "notebook/spec2vec/tutorial.ipynb"
 output: html_document
 ---
 
@@ -42,7 +42,7 @@ download.file(url, path_to_mgf, method = "curl")
 
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
-`Omigami` is a Python wrapper which :
+`Spec2Vec` is a Python wrapper which :
 - Builds a json payload from the MGF file
 - Calls the Spec2Vec API
 - Formats the prediction results into readable dataframes
@@ -61,7 +61,7 @@ The following information about the predicted spectra are returned :
 ```{r}
 # install devtools and romigami if not already installed
 if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
-if("romigami" %in% installed.packages() == FALSE) {devtools::install_github("omigami/romigami")}
+devtools::install_github("omigami/romigami")
 
 # import the romigami package
 library("romigami")
@@ -74,9 +74,15 @@ initialize_environment()
 
 ```{r}
 # Run Spec2Vec library search with your user token
+n_best_matches <- 10
+include_metadata <- list("Smiles", "Compound_name")
+ion_mode <- "positive"  # either positive or negative
 spectra_matches <- match_spectra_from_path(token = "my_token",
-                        mgf_path = path_to_mgf,
-                        n_best = 10)
+                                           mgf_path = path_to_mgf,
+                                           n_best = n_best_matches,
+                                           include_metadata = include_metadata,
+                                           ion_mode = ion_mode
+                                          )
 ```
 
 ## 2.1 View results
@@ -98,7 +104,8 @@ if (!dir.exists("matches")){
     dir.create("matches")
 }
 for (i in seq_along(spectra_matches)){
-    write.csv(spectra_matches[[i]],sprintf("matches/spectrum_%s.csv",i))
+    matches <- data.frame(lapply(spectra_matches[i], as.character), stringsAsFactors=FALSE)
+    write.csv(matches, sprintf("matches/spectrum_%s.csv", i))
 }
 ```
 
