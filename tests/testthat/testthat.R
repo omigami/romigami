@@ -4,7 +4,8 @@ library(romigami)
 test_that("integration is correct", {
   initialize_environment()
   mgf_path <- paste0(dirname(getwd()), "/romigami/tests/assets/GNPS-COLLECTIONS-MISC.mgf")
-  results <- match_spectra_from_path(token = "8DmWwNrFB8oSQcjHsEabHoNcUy30MZLY",
+  token <- Sys.getenv("ROMIGAMI_TOKEN")
+  results <- match_spectra_from_path(token = token,
                                      mgf_path = mgf_path,
                                      n_best = 10)
   expect_equal(length(results), 46)
