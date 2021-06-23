@@ -10,6 +10,7 @@ test_that("integration is correct", {
                                      10,
                                      list("Smiles", "Compound_name"),
                                      "positive"
+  )
   expect_equal(length(results), 46)
 })
 
