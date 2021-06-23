@@ -42,7 +42,7 @@ download.file(url, path_to_mgf, method = "curl")
 
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
-`Omigami` is a Python wrapper which :
+`Spec2Vec` is a Python wrapper which :
 - Builds a json payload from the MGF file
 - Calls the Spec2Vec API
 - Formats the prediction results into readable dataframes
