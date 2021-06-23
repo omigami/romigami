@@ -1,6 +1,6 @@
 Package: romigami
 Type: Package
-Title: R wrapper around the Omigami Python package
+Title: R Wrapper Around the Omigami Python Package
 Version: 1.0
 Date: 2021-06-01
 Author: Pierre Merckaert
