@@ -1,6 +1,6 @@
 library(testthat)
 library(yaml)
-source("/Users/pierre/PycharmProjects/romigami/R/romigami.R")
+source("R/romigami.R")
 
 test_that("integration is correct", {
   initialize_environment()
