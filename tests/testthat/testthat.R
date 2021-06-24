@@ -1,10 +1,14 @@
 library(testthat)
-source("/Users/pierre/PycharmProjects/romigami/R/romigami.R")
+library(yaml)
+source("R/romigami.R")
 
 test_that("integration is correct", {
   initialize_environment()
   mgf_path <- paste0(dirname(getwd()), "/romigami/tests/assets/GNPS-COLLECTIONS-MISC.mgf")
-  results <- match_spectra_from_path("8DmWwNrFB8oSQcjHsEabHoNcUy30MZLY",
+  config_path <- file.path("~/.config/omigami/config.yaml")
+  config <- yaml::yaml.load_file(input = config_path)
+  token <- config$login$dev$token
+  results <- match_spectra_from_path(token,
                                      mgf_path,
                                      10,
                                      list("Smiles", "Compound_name"),
