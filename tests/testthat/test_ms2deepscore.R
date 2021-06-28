@@ -1,10 +1,14 @@
 library(testthat)
+library(yaml)
 source("R/ms2deepscore.R")
 
 test_that("integration is correct", {
   initialize_environment()
   mgf_path <- paste0(dirname(getwd()), "/romigami/tests/assets/GNPS-2-EQUAL-SPECTRA.mgf")
-  results <- predict_similarity_of_pair(token = "8DmWwNrFB8oSQcjHsEabHoNcUy30MZLY",
+  config_path <- file.path("~/.config/omigami/config.yaml")
+  config <- yaml::yaml.load_file(input = config_path)
+  token <- config$login$dev$token
+  results <- predict_similarity_of_pair(token = token,
                                         mgf_path = mgf_path)
   expect_equal(results["Tanimoto Score"], 1)
 })
