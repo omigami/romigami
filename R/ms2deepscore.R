@@ -18,11 +18,15 @@ initialize_environment <- function(){
 
 #' @return A dictionary with the Tanimoto score
 #' @export
-predict_similarity_of_pair <- function(token, mgf_path){
+match_spectra_from_path <- function(token, mgf_path, n_best, include_metadata, ion_mode){
   omigami <- reticulate::import("omigami")
 
   client <- omigami$MS2DeepScore(token=token)
-  results <- client$predict_similarity_of_pair(mgf_path=mgf_path)
+    results <- client$match_spectra_from_path(mgf_path,
+                                            as.integer(n_best),
+                                            include_metadata,
+                                            ion_mode)
 
   return(results)
 }
+
