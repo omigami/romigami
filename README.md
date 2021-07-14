@@ -48,15 +48,16 @@ We aim to support metabolomics research by providing the following :
 ```r
 library(romigami)
 
-initialize_environment()
+omigami <- omigami_init()
+client <- omigami$Spec2Vec(token="my_token")
 
-token <- "your_token"
+
 mgf_file_path <- "path_to_file.mgf"
 n_best_matches <- 10
 include_metadata <- list("Smiles", "Compound_name")
 ion_mode <- "positive"  # either positive or negative
 
-results <- match_spectra_from_path(token = token,
+results <- client$match_spectra_from_path(
                                    mgf_path = mgf_file_path,
                                    n_best = n_best_matches,
                                    include_metadata = include_metadata,
@@ -82,14 +83,20 @@ And an [R Markdown document](https://github.com/omigami/romigami/blob/master/vig
 ```r
 library(romigami)
 
-initialize_environment()
+omigami <- omigami_init()
+client <- omigami$MS2DeepScore(token="my_token")
 
-token <- "your_token"
 mgf_file_path <- "path_to_file.mgf"
+n_best_matches <- 10
+include_metadata <- list("Smiles", "Compound_name")
+ion_mode <- "positive"  # either positive or negative
 
-results <- predict_similarity_of_pair(token = token,
-                                      mgf_path = mgf_file_path,
-) 
+results <- client$match_spectra_from_path(
+                                   mgf_path = mgf_file_path,
+                                   n_best = n_best_matches,
+                                   include_metadata = include_metadata,
+                                   ion_mode = ion_mode
+)
   ```
 
 #### Notebooks
@@ -111,7 +118,7 @@ And an [R Markdown document](https://github.com/omigami/romigami/blob/master/ms2
 ### MS2DeepScore
 1. Save your pair of spectra data in a MGF file locally
 2. Create an MS2DeepScore with your user token
-3. Call `predict_similarity_of_pair` with the location of your mgf file.
+3. Call `match_spectra_from_path` with the location of your mgf file.
 4. The MGF spectra data will be processed and sent to the trained neural network that will predict the molecular structural similarity. 
 5. The prediction is returned on the response as a dictionary.
 
