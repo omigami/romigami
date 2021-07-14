@@ -1,0 +1,75 @@
+---
+title: An R Markdown document converted from "notebook/ms2deepscore/tutorial.ipynb"
+output: html_document
+---
+
+# MS2DeepScore API – Quickstart
+
+*In order to use omigami, you need an access token provided by DataRevenue.*
+## Introduction
+
+This is a short guide on how you can predict molecular structural similarities (Tanimoto scores) from pairs of mass spectrometry spectra in local mgf files - using Omigami's MS2DeepScore API.
+
+The API uses a MS2DeepScore model which was trained on > 100,000 MS/MS spectra from GNPS. It prepares the two spectra and using a Siamese neural network predicts returns the molecular structural similarity (Tanimoto score).
+
+This notebook shows you how to:
+1. Specify any MGF file with two spectra.
+2. Make a prediction through the MS2DeepScore API.
+
+# 1. Load a MS/MS dataset (MGF format)
+
+We'll use the MS/MS dataset in the MGF format in this directory. You can also select any other from the [GNPS spectral library](https://gnps-external.ucsd.edu/gnpslibrary), or - of course - use your own.
+
+*Note that MS2DeepScore accepts two spectra at a time. Please prepare a MGF file with only two spectra.*
+
+```{r}
+# Load your own MS/MS dataset
+path_to_mgf <- 'GNPS-2-SPECTRA.mgf'
+```
+
+# 2. Predict molecular structural similarity with MS2DeepScore
+
+`Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
+
+`MS2DeepScore` is a python wrapper which :
+- Builds a json payload from the MGF file
+- Calls the MS2DeepScores API
+- Formats the prediction results into readable format
+
+```{r}
+# install devtools and romigami if not already installed
+if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
+devtools::install_github("omigami/romigami")
+
+# import the romigami package
+library("romigami")
+```
+
+```{r}
+# Initialize omigami environment
+omigami <- omigami_init()
+```
+
+```{r}
+# Run Spec2Vec library search with your user token
+client <- omigami$MS2DeepScore(token="my_token")
+
+n_best_matches <- 10
+include_metadata <- list("Smiles", "Compound_name")
+ion_mode <- "positive"  # either positive or negative
+results <- client$match_spectra_from_path(mgf_path = path_to_mgf,
+                                          n_best = n_best_matches,
+                                          include_metadata = include_metadata,
+                                          ion_mode = ion_mode
+            )
+```
+
+## 2.1 View prediction
+A dictionary is returned.
+
+```{r}
+results
+```
+
+____
+

@@ -68,16 +68,18 @@ library("romigami")
 ```
 
 ```{r}
-# environment setup
-initialize_environment()
+# Initialize omigami environment
+omigami <- omigami_init()
 ```
 
 ```{r}
 # Run Spec2Vec library search with your user token
+client <- omigami$Spec2Vec(token="my_token")
+
 n_best_matches <- 10
 include_metadata <- list("Smiles", "Compound_name")
 ion_mode <- "positive"  # either positive or negative
-spectra_matches <- match_spectra_from_path(token = "my_token",
+spectra_matches <- client$match_spectra_from_path(
                                            mgf_path = path_to_mgf,
                                            n_best = n_best_matches,
                                            include_metadata = include_metadata,
