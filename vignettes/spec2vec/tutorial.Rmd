@@ -5,10 +5,10 @@ output: html_document
 
 # Spec2Vec API – Quickstart
 
-*In order to use the client, you need an access token provided by DataRevenue.*
+*In order to use omigami, you need an access token provided by DataRevenue.*
 ## Introduction
 
-This is a short guide on you can add GNPS library matches to your mass spectra - using Omigami's Spec2Vec API.
+This is a short guide on how you can add GNPS library matches to your mass spectra - using Omigami's Spec2Vec API.
 
 The API uses a Spec2Vec model that was trained on the entire GNPS spectral library. It embeds each of your spectra into a vector space and calculates the cosine similarity to all GNPS library spectra in this vector space. It then returns you the top library matches for each of your spectra. To learn more about Spec2Vec read our gentle introduction: [Spec2Vec: The Next Step in Mass Spectral Similarity Metrics](https://www.datarevenue.com/en-blog/spec2vec-mass-spectral-similarity-metric)
 
@@ -33,7 +33,7 @@ path_to_mgf <- '/path/to/local_dataset.mgf'
 # OR download a small MS/MS dataset from GNPS, in the same directory as this notebook
 url = 'https://gnps-external.ucsd.edu/gnpslibrary/GNPS-COLLECTIONS-MISC.mgf'
 
-path_to_mgf = 'GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
+path_to_mgf = '../../notebook/spec2vec/GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
 
 download.file(url, path_to_mgf, method = "curl")
 ```
@@ -42,13 +42,15 @@ download.file(url, path_to_mgf, method = "curl")
 
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
-`Spec2Vec` is a Python wrapper which :
+`Spec2Vec` is a python wrapper which :
 - Builds a json payload from the MGF file
 - Calls the Spec2Vec API
 - Formats the prediction results into readable dataframes
 
 ____
 - `n_best` sets the number of matches you'd like per spectrum (it is set to 10 by default).
+- `include_metadata` selects the metadata fields that will be displayed in the resulting top matches.
+- `ion_mode` selects the ionization mode of the measured spectra (positive or negative)
 
 In the results dataframes, the input spectra can be identified by their number in the dataframes index, which refers to their order in the MGF file.  
 *i.e.* `matches of spectrum 1` gives the spectrum_id and Spec2Vec scores of the library spectra matches, for the first spectrum in the MGF file.
@@ -57,34 +59,32 @@ For each spectrum in the MGF file, the library spectra matches are sorted accord
 The following information about the predicted spectra are returned :
 - `score`, the Spec2Vec similarity score between the input spectrum and the library spectrum
 - `matches of spectrum #`, the spectrum_ID of the matched library spectra for the spectrum number # in the MGF file
+- `metadata`, metadata fields chosen with `include_metadata` in the input
 
 ```{r}
 # install devtools and romigami if not already installed
-if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
-devtools::install_github("omigami/romigami")
+#if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
+devtools::install_github("omigami/romigami", ref="MLOPS-306-ms2deepscore-refactor", force=TRUE)
 
 # import the romigami package
 library("romigami")
 ```
 
 ```{r}
-# Initialize omigami environment
+# environment setup
 omigami <- omigami_init()
 ```
 
 ```{r}
-# Run Spec2Vec library search with your user token
-client <- omigami$Spec2Vec(token="my_token")
+client <- omigami$Spec2Vec(token="73gyPBFLyA5zp1WYh0XzGBLMCiilJ3Gr")
+```
 
-n_best_matches <- 10
-include_metadata <- list("Smiles", "Compound_name")
-ion_mode <- "positive"  # either positive or negative
-spectra_matches <- client$match_spectra_from_path(
-                                           mgf_path = path_to_mgf,
-                                           n_best = n_best_matches,
-                                           include_metadata = include_metadata,
-                                           ion_mode = ion_mode
-                                          )
+```{r}
+# Run Spec2Vec library search with your user token
+spectra_matches <-     client$match_spectra_from_path(mgf_path = path_to_mgf,
+                            n_best = 10,
+                            include_metadata = list("Smiles", "Compound_name"),
+                            ion_mode = "positive")
 ```
 
 ## 2.1 View results
