@@ -63,8 +63,8 @@ The following information about the predicted spectra are returned :
 
 ```{r}
 # install devtools and romigami if not already installed
-#if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
-devtools::install_github("omigami/romigami", ref="MLOPS-306-ms2deepscore-refactor", force=TRUE)
+if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
+devtools::install_github("omigami/romigami")
 
 # import the romigami package
 library("romigami")
@@ -76,7 +76,7 @@ omigami <- omigami_init()
 ```
 
 ```{r}
-client <- omigami$Spec2Vec(token="73gyPBFLyA5zp1WYh0XzGBLMCiilJ3Gr")
+client <- omigami$Spec2Vec(token="MY_TOKEN")
 ```
 
 ```{r}

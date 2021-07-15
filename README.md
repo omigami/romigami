@@ -99,10 +99,10 @@ results <- client$match_spectra_from_path(
 )
   ```
 
-#### Notebooks
+#### MS2DeepScore Notebooks
 You can find a [tutorial](https://github.com/omigami/romigami/blob/master/notebook/ms2deepscore/tutorial.ipynb) notebook in the `/notebooks/` folder.
 
-And an [R Markdown document](https://github.com/omigami/romigami/blob/master/ms2deepscore/spec2vec/tutorial.Rmd) on the `/vignettes/` folder.
+And an [R Markdown document](https://github.com/omigami/romigami/blob/master/vignettes/ms2deepscore/tutorial.Rmd)) on the `/vignettes/` folder.
 
 
 ## How it works
@@ -124,7 +124,7 @@ And an [R Markdown document](https://github.com/omigami/romigami/blob/master/ms2
 
 ## Contribute to Omigami
 
-1. Fork it (https://github.com/omigami/omigami_client/fork)
+1. Fork it (https://github.com/omigami/omigami/fork)
 2. Create your feature branch (git checkout -b feature/fooBar)
 3. Commit your changes (git commit -am 'Add some fooBar')
 4. Push to the branch (git push origin feature/fooBar)
