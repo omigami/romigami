@@ -116,7 +116,7 @@ And an [R Markdown document](https://github.com/omigami/romigami/blob/master/vig
 6. The N best matches per spectrum are returned on the response as pandas dataframes.  
 
 ### MS2DeepScore
-1. Save your pair of spectra data in a MGF file locally
+1. Save your spectra data in a MGF file locally
 2. Create an MS2DeepScore with your user token
 3. Call `match_spectra_from_path` with the location of your mgf file.
 4. The MGF spectra data will be processed and sent to the trained neural network that will predict the molecular structural similarity. 

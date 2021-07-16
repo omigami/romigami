@@ -4,7 +4,7 @@ source("R/romigami.R")
 
 test_that("integration is correct", {
 
-  mgf_path <- paste0(dirname(getwd()), "/assets/GNPS-2-EQUAL-SPECTRA.mgf")
+  mgf_path <- paste0(dirname(getwd()), "/assets/GNPS-COLLECTIONS-MISC.mgf")
   config_path <- file.path("~/.config/omigami/config.yaml")
   config <- yaml::yaml.load_file(input = config_path)
   token <- config$login$dev$token
@@ -22,7 +22,7 @@ test_that("token is invalid", {
   mgf_path <- paste0(dirname(getwd()), "/assets/GNPS-COLLECTIONS-MISC.mgf")
 
   omigami <- omigami_init()
-  client <- omigami$MS2DeepScore(token="Randon Token")
+  client <- omigami$MS2DeepScore(token="Random Token")
 
 
   expect_error(

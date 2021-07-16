@@ -23,7 +23,7 @@ test_that("token is invalid", {
   mgf_path <- paste0(dirname(getwd()), "/assets/GNPS-COLLECTIONS-MISC.mgf")
 
   omigami <- omigami_init()
-  client <- omigami$Spec2Vec(token="Randon Token")
+  client <- omigami$Spec2Vec(token="Random Token")
 
 
   expect_error(
