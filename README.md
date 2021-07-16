@@ -119,8 +119,8 @@ And an [R Markdown document](https://github.com/omigami/romigami/blob/master/vig
 1. Save your spectra data in a MGF file locally
 2. Create an MS2DeepScore with your user token
 3. Call `match_spectra_from_path` with the location of your mgf file.
-4. The MGF spectra data will be processed and sent to the trained neural network that will predict the molecular structural similarity. 
-5. The prediction is returned on the response as a dictionary.
+4. The MGF spectra data will be processed and sent to the trained neural network that will predict the molecular structural similarity against reference spectra around the Precursor MZ.
+5. The N best matches per spectrum are returned on the response as pandas dataframes.  
 
 ## Contribute to Omigami
 
