@@ -33,12 +33,13 @@ path_to_mgf <- '../../notebook/ms2deepscore/GNPS-2-SPECTRA.mgf'
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
 
-`MS2DeepScore` is a python wrapper which :
+`MS2DeepScore` is a python wrapper which:
 - Builds a json payload from the MGF file
 - Calls the MS2DeepScores API
 - Formats the prediction results into readable dataframes
 
 ____
+`match_spectra_from_path()` takes the following arguments:
 - `n_best` sets the number of matches you'd like per spectrum (it is set to 10 by default).
 - `include_metadata` selects the metadata fields that will be displayed in the resulting top matches.
 - `ion_mode` selects the ionization mode of the measured spectra (positive or negative)
@@ -74,19 +75,22 @@ client <- omigami$MS2DeepScore(token="MY_TOKEN")
 ```{r}
 # Run MS2DeepScore Match Spectra from path 
 
-prediction <- client$match_spectra_from_path(
-        mgf_path = path_to_mgf, 
-        n_best = 10, 
-        include_metadata = list("Smiles", "Compound_name"), 
-        ion_mode = "positive"
-    )
+spectra_matches <- client$match_spectra_from_path(
+    mgf_path = path_to_mgf,
+    n_best = 10,
+    include_metadata = list("Smiles", "Compound_name"),
+    ion_mode = "positive"
+)
 ```
 
-## 2.1 View prediction
-A dictionary is returned.
+## 2.1 View results
+A list of dataframes is returned. To look at a specific dataframe you can call:
+```r
+spectra_matches[i]  # 'i' refers to the ith spectrum in the MGF file input
+```
 
 ```{r}
-prediction[1]
+spectra_matches[1]
 ```
 
 # 3. Save results

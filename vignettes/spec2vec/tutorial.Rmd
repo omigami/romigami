@@ -42,12 +42,13 @@ download.file(url, path_to_mgf, method = "curl")
 
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
-`Spec2Vec` is a python wrapper which :
+`Spec2Vec` is a python wrapper which:
 - Builds a json payload from the MGF file
 - Calls the Spec2Vec API
 - Formats the prediction results into readable dataframes
 
 ____
+`match_spectra_from_path()` takes the following arguments:
 - `n_best` sets the number of matches you'd like per spectrum (it is set to 10 by default).
 - `include_metadata` selects the metadata fields that will be displayed in the resulting top matches.
 - `ion_mode` selects the ionization mode of the measured spectra (positive or negative)
@@ -81,15 +82,17 @@ client <- omigami$Spec2Vec(token="MY_TOKEN")
 
 ```{r}
 # Run Spec2Vec library search with your user token
-spectra_matches <-     client$match_spectra_from_path(mgf_path = path_to_mgf,
-                            n_best = 10,
-                            include_metadata = list("Smiles", "Compound_name"),
-                            ion_mode = "positive")
+spectra_matches <-     client$match_spectra_from_path(
+    mgf_path = path_to_mgf,
+    n_best = 10,
+    include_metadata = list("Smiles", "Compound_name"),
+    ion_mode = "positive"
+)
 ```
 
 ## 2.1 View results
 A list of dataframes is returned. To look at a specific dataframe you can call :
-```python
+```r
 spectra_matches[i]  # 'i' refers to the ith spectrum in the MGF file input
 ```
 
