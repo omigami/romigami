@@ -1,23 +1,23 @@
 ---
-title: An R Markdown document converted from "notebook/spec2vec/tutorial.ipynb"
+title: An R Markdown document converted from "notebook/ms2deepscore/tutorial.ipynb"
 output: html_document
 ---
 
-# Spec2Vec API – Quickstart
+# MS2DeepScore API – Quickstart
 
 *In order to use omigami, you need an access token provided by DataRevenue.*
 ## Introduction
 
-This is a short guide on how you can add GNPS library matches to your mass spectra - using Omigami's Spec2Vec API.
+This is a short guide on how you can add GNPS library matches to your mass spectra by their Tanimoto Score - using Omigami's MS2DeepScore API.
 
-The API uses a Spec2Vec model that was trained on the entire GNPS spectral library. It embeds each of your spectra into a vector space and calculates the cosine similarity to all GNPS library spectra in this vector space. It then returns you the top library matches for each of your spectra. To learn more about Spec2Vec read our gentle introduction: [Spec2Vec: The Next Step in Mass Spectral Similarity Metrics](https://www.datarevenue.com/en-blog/spec2vec-mass-spectral-similarity-metric)
+The API uses a MS2DeepScore model which was trained on > 100,000 MS/MS spectra from GNPS. It prepares the input spectra and using a Siamese neural network predicts the molecular structural similarity (Tanimoto score) of the input spectra with the GNPS library spectra. It then returns you the top library matches for each of your spectra.
 
-This notebook shows you how 
-1. Specify any MGF file
-2. Run a library search through the Spec2Vec API
-3. Save the results as CSV.
+This notebook shows you how to:
+1. Specify any MGF file with two spectra.
+2. Run a library search through the MS2DeepScore API
+3. Save the results as XLSX.
 
-# 1. (Down)load a MS/MS dataset (MGF format)
+# 1. Load a MS/MS dataset (MGF format)
 
 We'll use a small MS/MS dataset in the MGF format from [here](https://gnps-external.ucsd.edu/gnpslibrary/GNPS-COLLECTIONS-MISC.mgf).
 You can also select any other from the [GNPS spectral library](https://gnps-external.ucsd.edu/gnpslibrary), or - of course - use your own.
@@ -25,26 +25,17 @@ You can also select any other from the [GNPS spectral library](https://gnps-exte
 *Note that you will need the Precursor_MZ field `PEPMASS` and the abundance pairs in your MGF file.*
 
 ```{r}
-# Load your own MS/MS dataset (and skip the next cell)
-path_to_mgf <- '/path/to/local_dataset.mgf'
+# Load your own MS/MS dataset
+path_to_mgf <- '../../notebook/ms2deepscore/GNPS-2-SPECTRA.mgf'
 ```
 
-```{r}
-# OR download a small MS/MS dataset from GNPS, in the same directory as this notebook
-url = 'https://gnps-external.ucsd.edu/gnpslibrary/GNPS-COLLECTIONS-MISC.mgf'
-
-path_to_mgf = '../../notebook/spec2vec/GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
-
-download.file(url, path_to_mgf, method = "curl")
-```
-
-# 2. Query for the best matches with Spec2Vec
-
+# 2. Query for the best matches with MS2DeepScore
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
-`Spec2Vec` is a python wrapper which:
+
+`MS2DeepScore` is a python wrapper which:
 - Builds a json payload from the MGF file
-- Calls the Spec2Vec API
+- Calls the MS2DeepScores API
 - Formats the prediction results into readable dataframes
 
 ____
@@ -54,11 +45,11 @@ ____
 - `ion_mode` selects the ionization mode of the measured spectra (positive or negative)
 
 In the results dataframes, the input spectra can be identified by their number in the dataframes index, which refers to their order in the MGF file.  
-*i.e.* `matches of spectrum 1` gives the spectrum_id and Spec2Vec scores of the library spectra matches, for the first spectrum in the MGF file.
+*i.e.* `matches of spectrum 1` gives the spectrum_id and MS2DeepScore scores of the library spectra matches, for the first spectrum in the MGF file.
 
-For each spectrum in the MGF file, the library spectra matches are sorted according to their Spec2Vec similarity score (best is first).   
+For each spectrum in the MGF file, the library spectra matches are sorted according to their MS2DeepScore similarity score (best is first).   
 The following information about the predicted spectra are returned :
-- `score`, the Spec2Vec similarity score between the input spectrum and the library spectrum
+- `score`, the MS2DeepScore similarity score between the input spectrum and the library spectrum
 - `matches of spectrum #`, the spectrum_ID of the matched library spectra for the spectrum number # in the MGF file
 - `metadata`, metadata fields chosen with `include_metadata` in the input
 
@@ -72,17 +63,19 @@ library("romigami")
 ```
 
 ```{r}
-# environment setup
+# Initialize omigami environment
 omigami <- omigami_init()
 ```
 
 ```{r}
-client <- omigami$Spec2Vec(token="MY_TOKEN")
+# Initialize MS2DeepScore Client
+client <- omigami$MS2DeepScore(token="MY_TOKEN")
 ```
 
 ```{r}
-# Run Spec2Vec library search with your user token
-spectra_matches <-     client$match_spectra_from_path(
+# Run MS2DeepScore Match Spectra from path 
+
+spectra_matches <- client$match_spectra_from_path(
     mgf_path = path_to_mgf,
     n_best = 10,
     include_metadata = list("Smiles", "Compound_name"),
@@ -91,7 +84,7 @@ spectra_matches <-     client$match_spectra_from_path(
 ```
 
 ## 2.1 View results
-A list of dataframes is returned. To look at a specific dataframe you can call :
+A list of dataframes is returned. To look at a specific dataframe you can call:
 ```r
 spectra_matches[i]  # 'i' refers to the ith spectrum in the MGF file input
 ```
@@ -108,12 +101,11 @@ Execute the following cell to save the results in a CSV file. For readability, e
 if (!dir.exists("matches")){
     dir.create("matches")
 }
-for (i in seq_along(spectra_matches)){
-    matches <- data.frame(lapply(spectra_matches[i], as.character), stringsAsFactors=FALSE)
+for (i in seq_along(prediction)){
+    matches <- data.frame(lapply(prediction[i], as.character), stringsAsFactors=FALSE)
     write.csv(matches, sprintf("matches/spectrum_%s.csv", i))
 }
 ```
 
-
-___
+____
 
