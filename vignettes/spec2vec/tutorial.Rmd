@@ -1,5 +1,4 @@
 ---
-title: An R Markdown document converted from "/home/rouven/Documents/Projects/romigami/notebook/spec2vec/tutorial.ipynb"
 output: html_document
 ---
 
@@ -33,7 +32,7 @@ path_to_mgf <- '/path/to/local_dataset.mgf'
 # OR download a small MS/MS dataset from GNPS, in the same directory as this notebook
 url = 'https://gnps-external.ucsd.edu/gnpslibrary/GNPS-COLLECTIONS-MISC.mgf'
 
-path_to_mgf = 'GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
+path_to_mgf = '../../notebook/spec2vec/GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
 
 download.file(url, path_to_mgf, method = "curl")
 ```

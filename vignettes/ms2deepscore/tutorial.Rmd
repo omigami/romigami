@@ -1,5 +1,4 @@
 ---
-title: An R Markdown document converted from "/home/rouven/Documents/Projects/romigami/notebook/ms2deepscore/tutorial.ipynb"
 output: html_document
 ---
 
@@ -26,7 +25,7 @@ You can also select any other from the [GNPS spectral library](https://gnps-exte
 
 ```{r}
 # Load your own MS/MS dataset
-path_to_mgf <- 'GNPS-2-SPECTRA.mgf'
+path_to_mgf <- '../../notebook/ms2deepscore/GNPS-2-SPECTRA.mgf'
 ```
 
 # 2. Query for the best matches with MS2DeepScore
