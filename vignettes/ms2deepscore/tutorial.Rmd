@@ -1,5 +1,5 @@
 ---
-title: An R Markdown document converted from "notebook/ms2deepscore/tutorial.ipynb"
+title: An R Markdown document converted from "/home/rouven/Documents/Projects/romigami/notebook/ms2deepscore/tutorial.ipynb"
 output: html_document
 ---
 
@@ -26,7 +26,7 @@ You can also select any other from the [GNPS spectral library](https://gnps-exte
 
 ```{r}
 # Load your own MS/MS dataset
-path_to_mgf <- '../../notebook/ms2deepscore/GNPS-2-SPECTRA.mgf'
+path_to_mgf <- 'GNPS-2-SPECTRA.mgf'
 ```
 
 # 2. Query for the best matches with MS2DeepScore
@@ -42,7 +42,7 @@ ____
 `match_spectra_from_path()` takes the following arguments:
 - `n_best` sets the number of matches you'd like per spectrum (it is set to 10 by default).
 - `include_metadata` selects the metadata fields that will be displayed in the resulting top matches.
-- `ion_mode` selects the ionization mode of the measured spectra (positive or negative)
+- `ion_mode` selects the ionization mode of the measured spectra (positive or negative).
 
 In the results dataframes, the input spectra can be identified by their number in the dataframes index, which refers to their order in the MGF file.  
 *i.e.* `matches of spectrum 1` gives the spectrum_id and MS2DeepScore scores of the library spectra matches, for the first spectrum in the MGF file.
@@ -76,9 +76,9 @@ client <- omigami$MS2DeepScore(token="MY_TOKEN")
 # Run MS2DeepScore Match Spectra from path 
 
 spectra_matches <- client$match_spectra_from_path(
-    mgf_path = path_to_mgf,
-    n_best = 10,
-    include_metadata = list("Smiles", "Compound_name"),
+    mgf_path = path_to_mgf, 
+    n_best = 10, 
+    include_metadata = list("Smiles", "Compound_name"), 
     ion_mode = "positive"
 )
 ```
@@ -105,6 +105,28 @@ for (i in seq_along(prediction)){
     matches <- data.frame(lapply(prediction[i], as.character), stringsAsFactors=FALSE)
     write.csv(matches, sprintf("matches/spectrum_%s.csv", i))
 }
+```
+
+# 4. Create Plots
+
+The following cell will show you an example of how to visualize your matches.
+## Creating a Plot of the molecular structure
+
+```{r}
+plotter <- omigami$MoleculePlotter()
+plotter.plot_molecule_structure_grid(spectra_matches=spectra_matches[0], representation="smiles", draw_indices=1, molecule_image_size=list(200, 200), substructure_highlight=1)
+```
+
+## Creating a Plot using the ClassyFire API
+
+```{r}
+plotter.plot_classyfire_result(spectra_matches=spectra_matches[0])
+```
+
+## Creating a Plot using the NP-Classifier API
+
+```{r}
+plotter.plot_NPclassifier_result(spectra_matches=spectra_matches[0], color="orange")
 ```
 
 ____

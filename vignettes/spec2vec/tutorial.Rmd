@@ -1,5 +1,5 @@
 ---
-title: An R Markdown document converted from "notebook/spec2vec/tutorial.ipynb"
+title: An R Markdown document converted from "/home/rouven/Documents/Projects/romigami/notebook/spec2vec/tutorial.ipynb"
 output: html_document
 ---
 
@@ -33,7 +33,7 @@ path_to_mgf <- '/path/to/local_dataset.mgf'
 # OR download a small MS/MS dataset from GNPS, in the same directory as this notebook
 url = 'https://gnps-external.ucsd.edu/gnpslibrary/GNPS-COLLECTIONS-MISC.mgf'
 
-path_to_mgf = '../../notebook/spec2vec/GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
+path_to_mgf = 'GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
 
 download.file(url, path_to_mgf, method = "curl")
 ```
@@ -42,7 +42,7 @@ download.file(url, path_to_mgf, method = "curl")
 
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
-`Spec2Vec` is a python wrapper which:
+`Spec2Vec` is a python wrapper which :
 - Builds a json payload from the MGF file
 - Calls the Spec2Vec API
 - Formats the prediction results into readable dataframes
@@ -63,7 +63,7 @@ The following information about the predicted spectra are returned :
 - `metadata`, metadata fields chosen with `include_metadata` in the input
 
 ```{r}
-# install devtools and romigami if not already installed
+# # install devtools and romigami if not already installed
 if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
 devtools::install_github("omigami/romigami")
 
@@ -82,7 +82,7 @@ client <- omigami$Spec2Vec(token="MY_TOKEN")
 
 ```{r}
 # Run Spec2Vec library search with your user token
-spectra_matches <-     client$match_spectra_from_path(
+spectra_matches <- client$match_spectra_from_path(
     mgf_path = path_to_mgf,
     n_best = 10,
     include_metadata = list("Smiles", "Compound_name"),
@@ -91,7 +91,7 @@ spectra_matches <-     client$match_spectra_from_path(
 ```
 
 ## 2.1 View results
-A list of dataframes is returned. To look at a specific dataframe you can call :
+A list of dataframes is returned. To look at a specific dataframe you can call:
 ```r
 spectra_matches[i]  # 'i' refers to the ith spectrum in the MGF file input
 ```
@@ -112,6 +112,28 @@ for (i in seq_along(spectra_matches)){
     matches <- data.frame(lapply(spectra_matches[i], as.character), stringsAsFactors=FALSE)
     write.csv(matches, sprintf("matches/spectrum_%s.csv", i))
 }
+```
+
+# 4. Create Plots
+
+The following cell will show you an example of how to visualize your matches.
+## Creating a Plot of the molecular structure
+
+```{r}
+plotter <- omigami$MoleculePlotter()
+plotter.plot_molecule_structure_grid(spectra_matches=spectra_matches[0], representation="smiles", draw_indices=1, molecule_image_size=list(200, 200), substructure_highlight=1)
+```
+
+## Creating a Plot using the ClassyFire API
+
+```{r}
+plotter.plot_classyfire_result(spectra_matches=spectra_matches[0])
+```
+
+## Creating a Plot using the NP-Classifier API
+
+```{r}
+plotter.plot_NPclassifier_result(spectra_matches=spectra_matches[0], color="orange")
 ```
 
 
