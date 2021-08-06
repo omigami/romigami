@@ -116,24 +116,24 @@ for (i in seq_along(spectra_matches)){
 
 # 4. Create Plots
 
-The following cell will show you an example of how to visualize your matches.
+The following cells will show you an example of how to visualize your matches.
 ## Creating a Plot of the molecular structure
 
 ```{r}
 plotter <- omigami$MoleculePlotter()
-plotter.plot_molecule_structure_grid(spectra_matches=spectra_matches[0], representation="smiles", draw_indices=1, molecule_image_size=list(200, 200), substructure_highlight=1)
+plotter.plot_molecule_structure_grid(spectra_matches=spectra_matches[1], representation="smiles", draw_indices=1, molecule_image_size=list(200, 200), substructure_highlight=1)
 ```
 
 ## Creating a Plot using the ClassyFire API
 
 ```{r}
-plotter.plot_classyfire_result(spectra_matches=spectra_matches[0])
+plotter.plot_classyfire_result(spectra_matches=spectra_matches[1])
 ```
 
 ## Creating a Plot using the NP-Classifier API
 
 ```{r}
-plotter.plot_NPclassifier_result(spectra_matches=spectra_matches[0], color="orange")
+plotter.plot_NPclassifier_result(spectra_matches=spectra_matches[1], color="orange")
 ```
 
 
