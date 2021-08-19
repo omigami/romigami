@@ -1,5 +1,4 @@
 ---
-title: An R Markdown document converted from "notebook/ms2deepscore/tutorial.ipynb"
 output: html_document
 ---
 
@@ -42,7 +41,7 @@ ____
 `match_spectra_from_path()` takes the following arguments:
 - `n_best` sets the number of matches you'd like per spectrum (it is set to 10 by default).
 - `include_metadata` selects the metadata fields that will be displayed in the resulting top matches.
-- `ion_mode` selects the ionization mode of the measured spectra (positive or negative)
+- `ion_mode` selects the ionization mode of the measured spectra (positive or negative).
 
 In the results dataframes, the input spectra can be identified by their number in the dataframes index, which refers to their order in the MGF file.  
 *i.e.* `matches of spectrum 1` gives the spectrum_id and MS2DeepScore scores of the library spectra matches, for the first spectrum in the MGF file.
@@ -76,9 +75,9 @@ client <- omigami$MS2DeepScore(token="MY_TOKEN")
 # Run MS2DeepScore Match Spectra from path 
 
 spectra_matches <- client$match_spectra_from_path(
-    mgf_path = path_to_mgf,
-    n_best = 10,
-    include_metadata = list("Smiles", "Compound_name"),
+    mgf_path = path_to_mgf, 
+    n_best = 10, 
+    include_metadata = list("Smiles", "Compound_name"), 
     ion_mode = "positive"
 )
 ```
@@ -86,11 +85,11 @@ spectra_matches <- client$match_spectra_from_path(
 ## 2.1 View results
 A list of dataframes is returned. To look at a specific dataframe you can call:
 ```r
-spectra_matches[i]  # 'i' refers to the ith spectrum in the MGF file input
+spectra_matches[[i]]  # 'i' refers to the ith spectrum in the MGF file input
 ```
 
 ```{r}
-spectra_matches[1]
+spectra_matches[[1]]
 ```
 
 # 3. Save results
@@ -101,11 +100,10 @@ Execute the following cell to save the results in a CSV file. For readability, e
 if (!dir.exists("matches")){
     dir.create("matches")
 }
-for (i in seq_along(prediction)){
-    matches <- data.frame(lapply(prediction[i], as.character), stringsAsFactors=FALSE)
+for (i in seq_along(spectra_matches)){
+    matches <- data.frame(lapply(spectra_matches[[i]], as.character), stringsAsFactors=FALSE)
     write.csv(matches, sprintf("matches/spectrum_%s.csv", i))
 }
 ```
-
 ____
 

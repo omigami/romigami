@@ -1,2 +1,7 @@
 inst/doc
 .ipynb_checkpoints
+
+.RData
+.Rhistory
+.idea/*
+notebook/spec2vec/matches/*
