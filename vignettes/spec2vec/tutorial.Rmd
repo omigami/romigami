@@ -41,7 +41,7 @@ download.file(url, path_to_mgf, method = "curl")
 
 `Romigami` is a R wrapper which instantiates a virtual environment on which to install and call the Python `Omigami` package
 
-`Spec2Vec` is a python wrapper which :
+`Spec2Vec` is a python wrapper which:
 - Builds a json payload from the MGF file
 - Calls the Spec2Vec API
 - Formats the prediction results into readable dataframes
@@ -62,7 +62,7 @@ The following information about the predicted spectra are returned :
 - `metadata`, metadata fields chosen with `include_metadata` in the input
 
 ```{r}
-# # install devtools and romigami if not already installed
+# install devtools and romigami if not already installed
 if("devtools" %in% installed.packages() == FALSE) {install.packages("devtools")}
 devtools::install_github("omigami/romigami")
 
