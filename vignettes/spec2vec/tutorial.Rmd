@@ -30,9 +30,9 @@ path_to_mgf <- '/path/to/local_dataset.mgf'
 
 ```{r}
 # OR download a small MS/MS dataset from GNPS, in the same directory as this notebook
-url = 'https://gnps-external.ucsd.edu/gnpslibrary/GNPS-COLLECTIONS-MISC.mgf'
+url <- 'https://gnps-external.ucsd.edu/gnpslibrary/GNPS-COLLECTIONS-MISC.mgf'
 
-path_to_mgf = '../../notebook/spec2vec/GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
+path_to_mgf <- '../../notebook/spec2vec/GNPS-COLLECTIONS-MISC.mgf' # use your prefered saving path here
 
 download.file(url, path_to_mgf, method = "curl")
 ```
@@ -92,11 +92,11 @@ spectra_matches <- client$match_spectra_from_path(
 ## 2.1 View results
 A list of dataframes is returned. To look at a specific dataframe you can call:
 ```r
-spectra_matches[i]  # 'i' refers to the ith spectrum in the MGF file input
+spectra_matches[[i]]  # 'i' refers to the ith spectrum in the MGF file input
 ```
 
 ```{r}
-spectra_matches[1]
+spectra_matches[[1]]
 ```
 
 # 3. Save results
@@ -108,33 +108,9 @@ if (!dir.exists("matches")){
     dir.create("matches")
 }
 for (i in seq_along(spectra_matches)){
-    matches <- data.frame(lapply(spectra_matches[i], as.character), stringsAsFactors=FALSE)
+    matches <- data.frame(lapply(spectra_matches[[i]], as.character), stringsAsFactors=FALSE)
     write.csv(matches, sprintf("matches/spectrum_%s.csv", i))
 }
 ```
-
-# 4. Create Plots
-
-The following cells will show you an example of how to visualize your matches.
-## Creating a Plot of the molecular structure
-
-```{r}
-plotter <- omigami$MoleculePlotter()
-plotter.plot_molecule_structure_grid(spectra_matches=spectra_matches[1], representation="smiles", draw_indices=1, molecule_image_size=list(200, 200), substructure_highlight=1)
-```
-
-## Creating a Plot using the ClassyFire API
-
-```{r}
-plotter.plot_classyfire_result(spectra_matches=spectra_matches[1])
-```
-
-## Creating a Plot using the NP-Classifier API
-
-```{r}
-plotter.plot_NPclassifier_result(spectra_matches=spectra_matches[1], color="orange")
-```
-
-
 ___
 
